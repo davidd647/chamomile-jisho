@@ -14,11 +14,55 @@ app.get("/search", (req, res) => {
   const searchTerm = req.query.term;
 
   jisho.searchForPhrase(searchTerm).then((result) => {
-    const kanji = result.data[0].japanese[0].word;
-    const furigana = result.data[0].japanese[0].reading;
-    const english = result.data[0].senses[0].english_definitions[0];
+    let kanji, furigana, english;
 
+    console.log("˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰");
+    // console.log(result.data);
+
+    if (result.data.length == 0) {
+      kanji = "no data";
+      furigana = "-";
+      english = "-";
+    } else {
+      // kanji = result.data[0].japanese[0].word;
+      kanji = "";
+
+      console.log("japanese words: ");
+      words = [];
+      result.data[0].japanese.forEach((word, i) => {
+        words.push(word.word);
+        console.log(`reading ${i}: ${word.reading}`);
+      });
+      kanji = words.join("/");
+
+      furigana = result.data[0].japanese[0].reading;
+
+      if (kanji == undefined) {
+        console.log("kanji reassigned because undefined...");
+        kanji = furigana;
+      }
+      english = result.data[0].senses[0].english_definitions[0];
+      english = english.replace(/,/g, " -");
+      english = english.replace(/\"/g, " -");
+
+      console.log("  ");
+      result.data[0].senses.forEach((sense, i) => {
+        // console.log(`sense for ${i}: ${sense}`);
+        // console.log(sense);
+        sense.english_definitions.forEach((def, j) => {
+          console.log(`sense ${i} - ${j} - ${def}`);
+        });
+        console.log(" --- ");
+      });
+      // result.data[0].senses[0].english_definitions.forEach((def, i) => {
+      //   console.log(`${i} - ${def}`);
+      // });
+    }
+
+    console.log(`entries found: ${result.data.length}`);
     console.log(`"${kanji},${furigana},${english}"`);
+
+    console.log("˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅");
 
     return res.send(`"${kanji},${furigana},${english}"`);
   });
