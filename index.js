@@ -30,14 +30,17 @@ app.get("/search", (req, res) => {
       console.log("japanese words: ");
       words = [];
       result.data[0].japanese.forEach((word, i) => {
-        words.push(word.word);
-        console.log(`reading ${i}: ${word.reading}`);
+        word.word !== undefined ? words.push(word.word) : null;
+
+        console.log(
+          `reading ${i}: ${word.reading} - - - (kanji: ${word.word})`
+        );
       });
       kanji = words.join("/");
 
       furigana = result.data[0].japanese[0].reading;
 
-      if (kanji == undefined) {
+      if (kanji == undefined || kanji == "") {
         console.log("kanji reassigned because undefined...");
         kanji = furigana;
       }
