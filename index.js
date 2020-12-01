@@ -28,7 +28,7 @@ app.get("/search", (req, res) => {
       kanji = "";
 
       console.log("japanese words: ");
-      words = [];
+      var words = [];
       result.data[0].japanese.forEach((word, i) => {
         word.word !== undefined ? words.push(word.word) : null;
 
@@ -49,12 +49,22 @@ app.get("/search", (req, res) => {
       english = english.replace(/\"/g, " -");
 
       console.log("  ");
+
+      var englishWords = [];
       result.data[0].senses.forEach((sense, i) => {
         // console.log(`sense for ${i}: ${sense}`);
         // console.log(sense);
         sense.english_definitions.forEach((def, j) => {
-          console.log(`sense ${i} - ${j} - ${def}`);
+          // console.log(`sense ${i} - ${j} - ${def}`);
+          if (def !== undefined && def !== "") {
+            englishWords.push(def);
+          }
         });
+        // use two top english terms if more than one exists...
+        if (englishWords[1] !== undefined) {
+          english = [englishWords[0], englishWords[1]].join("/");
+        }
+        // console.log(englishWords.join("/"));
         console.log(" --- ");
       });
       // result.data[0].senses[0].english_definitions.forEach((def, i) => {
