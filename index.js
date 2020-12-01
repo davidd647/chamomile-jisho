@@ -41,7 +41,7 @@ app.get("/search", (req, res) => {
       furigana = result.data[0].japanese[0].reading;
 
       if (kanji == undefined || kanji == "") {
-        console.log("kanji reassigned because undefined...");
+        console.log("kanji reassigned because undefined or blank string...");
         kanji = furigana;
       }
       english = result.data[0].senses[0].english_definitions[0];
