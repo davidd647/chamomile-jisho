@@ -17,6 +17,8 @@ app.get("/search", (req, res) => {
     let kanji, furigana, english;
 
     console.log("˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰");
+    console.log("searchTerm: " + searchTerm);
+    console.log("˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰˰");
     // console.log(result.data);
 
     if (result.data.length == 0) {
@@ -45,8 +47,6 @@ app.get("/search", (req, res) => {
         kanji = furigana;
       }
       english = result.data[0].senses[0].english_definitions[0];
-      english = english.replace(/,/g, " -");
-      english = english.replace(/\"/g, " -");
 
       console.log("  ");
 
@@ -55,18 +55,22 @@ app.get("/search", (req, res) => {
         // console.log(`sense for ${i}: ${sense}`);
         // console.log(sense);
         sense.english_definitions.forEach((def, j) => {
-          // console.log(`sense ${i} - ${j} - ${def}`);
+          console.log(`sense ${i} - ${j} - ${def}`);
           if (def !== undefined && def !== "") {
             englishWords.push(def);
           }
         });
-        // use two top english terms if more than one exists...
-        if (englishWords[1] !== undefined) {
-          english = [englishWords[0], englishWords[1]].join("/");
-        }
-        // console.log(englishWords.join("/"));
+
         console.log(" --- ");
       });
+
+      // use two top english terms if more than one exists...
+      if (englishWords[1] !== undefined) {
+        english = [englishWords[0], englishWords[1]].join("/");
+      }
+
+      english = english.replace(/,/g, " -");
+      english = english.replace(/\"/g, " -");
       // result.data[0].senses[0].english_definitions.forEach((def, i) => {
       //   console.log(`${i} - ${def}`);
       // });
