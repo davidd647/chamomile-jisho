@@ -81,7 +81,7 @@ app.get("/search", (req, res) => {
 
     console.log("˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅");
 
-    return res.send(`"${kanji},${furigana},${english}"`);
+    return res.send(`"${kanji}/${furigana},${english}"`);
   });
 });
 
