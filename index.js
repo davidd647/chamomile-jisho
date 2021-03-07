@@ -118,11 +118,6 @@ app.get("/search", (req, res) => {
 
       english = english.replace(/,/g, " -");
       english = english.replace(/\"/g, " -");
-      // result.data[0].senses[0].english_definitions.forEach((def, i) => {
-      //   console.log(`${i} - ${def}`);
-      // });
-
-      console.log(JSON.stringify(result.data, 0, 2));
     }
 
     console.log(`entries found: ${result.data.length}`);
@@ -131,7 +126,6 @@ app.get("/search", (req, res) => {
     console.log("˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅˅");
 
     return res.send(JSON.stringify(result.data, 0, 2));
-    // return res.send(`"${kanji}/${furigana},${english}"`);
   });
 });
 
