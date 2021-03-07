@@ -81,9 +81,9 @@ app.get("/search", (req, res) => {
       result.data[0].japanese.forEach((word, i) => {
         word.word !== undefined ? words.push(word.word) : null;
 
-        console.log(
-          `reading ${i}: ${word.reading} - - - (kanji: ${word.word})`
-        );
+        // console.log(
+        //   `reading ${i}: ${word.reading} - - - (kanji: ${word.word})`
+        // );
       });
       kanji = words.join("/");
 
